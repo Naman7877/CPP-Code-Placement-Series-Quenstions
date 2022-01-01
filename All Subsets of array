@@ -1,0 +1,36 @@
+// here we can print all sub array or an array size of n
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int main()
+{
+    int n;
+    cout << "enter the size of the array" << endl;
+    cin >> n;
+    int arr[n];
+    for (int i = 0; i < n; i++)
+    {
+        cin >> arr[i];
+    }
+    // contaion 2 point i and j point
+    // here i is start point and j is last point
+    // k print all element between in i and j points
+    // i=2 to n then j=2 to n
+    // then k=2 and traverse than k<=j 
+    // j=3 then k=2 t0 3 traverse  
+
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = i; j < n; j++)
+        {
+            for (int k = i; k <= j; k++)
+            {
+                cout << arr[k]<<" ";
+            }
+            cout << endl;
+        }
+    }
+
+    return 0;
+}
