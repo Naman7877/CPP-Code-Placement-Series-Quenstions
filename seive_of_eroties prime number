@@ -1,0 +1,63 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+void prime_sieve(int n)
+{
+    // here take a array that take 0 for unmark element 
+    // in starting fage the whole array initilized by 0
+    int arr[100]={0};
+    for(int i=2;i<=n;i++){
+        if(arr[i]==0){
+            for(int j=i*i;j<=n;j+=i){
+                // here j always denote that number whois is i squre or multiple
+                arr[j]=1;
+            }
+        }
+    }
+    // here print o value number in array
+    for (int i = 2; i <=n; i++)
+    {
+        if(arr[i]==0)
+        {
+            cout<<i<<" ";
+        }
+    }
+}
+
+void prime_factor(int n)
+{
+    int arr[100] ;
+    for (int i = 2; i <= n; i++)
+    {
+        arr[i] = i;
+    }
+    for (int i = 2; i <= n; i++)
+    {
+        if (arr[i] == i)
+        {
+            for (int j = i * i; j <= n; j += i)
+            {
+               if(arr[j] ==j)
+               {
+                   arr[j]=i;
+               }
+            }
+        }
+    }
+
+    while (n!=0)
+    {
+        cout<<arr[n]<<endl;
+        n=n/arr[n];
+    }
+    
+}
+
+int main(){
+    // here we calculate the prime number with the help of sieveOfErotosthenes theorem 
+    //prime_sieve(30);
+    // calculate the min prime factor
+    prime_factor(20);
+    return 0;
+}
