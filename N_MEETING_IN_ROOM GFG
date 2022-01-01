@@ -1,0 +1,59 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+    int n;
+    cout << "enter the size of meeting " << endl;
+    cin >> n;
+    int start[n];
+    int end[n];
+
+    for (int i = 0; i < n; i++)
+    {
+        cout << "enter the start time of" << i << "meeting " << endl;
+        cin >> start[i];
+        cout << "enter the end time of " << i << "meeting" << endl;
+        cin >> end[i];
+    }
+
+    // count variable contain the total meeting count the completely in meeting room
+    int count;
+
+    set<pair<int, int>> s;
+    // with the help of set and pair create new data structure
+    // set conatin only unique pair so their is no problem of duplicte meeting times
+    // set Bydefalut sorted in nature according to first element
+    // here the first elements is end array elements
+
+    for (int i = 0; i < n; i++)
+    {
+        s.insert(make_pair(end[i], start[i]));
+    }
+
+    // here s.first contain end time of meeting
+    // and s.second conatin start time of meeting
+
+
+    // here x is used to store previous meeting end time bydefault it conatin -1
+    int x = -1;
+    // here create a iterator to iterate the set and fetch the value
+    set<pair<int, int>>::iterator it;
+
+    for (it = s.begin(); it != s.end(); it++)
+    {
+
+        // here check that start time is greater than the previous end time 
+        // if condition return true that that meeting conducte in meeting room 
+        if (it->second > x)
+        {
+            count++;
+
+            // x update to new meeting end time 
+            x = it->first;
+        }
+    }
+    cout<<count;
+
+    return 0;
+}
