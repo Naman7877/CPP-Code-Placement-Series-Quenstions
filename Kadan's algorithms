@@ -1,0 +1,38 @@
+// here we can calculate the max sum of sub array
+// in this we can use kadran algorithm 
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int main(){
+    int n;
+    cout<<"enter the size of array"<<endl;
+    cin>>n;
+    int arr[n];
+    for(int i=0;i<n;i++)
+    {
+        cin>>arr[i];
+    }
+    // i contain the max sum 
+    int max=0;
+    int current=0; // current can contaion the current sum of subarray 
+    
+    for(int i=0;i<n;i++)
+   {
+       if(current<0)
+       {
+           // if current sub array sum is negative then currernt assign 0 
+           // because que ask for max sum of sub array  not negative
+           current=0;
+       }
+       // then sum the elements with current 
+
+       current=current+arr[i];
+       if(current>max){
+           max=current;
+       }
+   }
+   cout<<"the max sum of sub array is "<<max<<endl;
+    
+    return 0;
+}
