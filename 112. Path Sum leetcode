@@ -1,0 +1,17 @@
+ bool hasPathSum(TreeNode* root, int targetSum) {
+        
+        // null node than return false 
+       if(!root)return false; 
+        
+    
+        // here subtract node value form target sum 
+        targetSum=targetSum-root->val;              
+        
+        // and check if given target sum is zero and there is no left and right node 
+        // it mean this is path sum of root to leaf node that is equal to given target sum 
+        if(targetSum==0&&!root->left&&!root->right)return true; 
+        
+        // recursively use for left and right child/node
+        return hasPathSum(root->left,targetSum)||hasPathSum(root->right,targetSum);//Propagation
+    }
+};
