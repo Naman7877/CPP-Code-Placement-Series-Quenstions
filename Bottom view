@@ -1,0 +1,40 @@
+vector <int> bottomView(Node *root) {
+        vector<int>v;
+       
+       // if root is null than return empty vector
+        if(root==NULL)
+        {
+            return v;
+        }
+        
+        // create a map that store line and value 
+        map<int,int>m;
+        // ueue containg node and that line number
+        queue<pair<Node*,int>> q;
+        // at the starting q containg zero node 
+        q.push({root,0});
+        while(!q.empty()) {
+            auto it = q.front(); 
+            q.pop(); 
+            Node* node = it.first; 
+            int line = it.second; 
+            
+            // their is no need of map because in bottom view use last elements 
+            // if we want first enement at perticular line than we need map
+            m[line]=node->data;
+        
+            // run for same left and right subtree 
+            if(node->left != NULL) {
+                q.push({node->left, line-1}); 
+            }
+            if(node->right != NULL) {
+                q.push({node->right, line + 1}); 
+            }
+            
+        }
+        
+        for(auto it : m) {
+            v.push_back(it.second); 
+        }
+        return v; 
+    }
