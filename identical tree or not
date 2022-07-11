@@ -1,0 +1,41 @@
+void inorder(Node* root,vector<int>& v)
+    {
+        if(root!=NULL)
+        {
+            
+            v.push_back(root->data);
+            if(root->left!=NULL)
+            {
+                inorder(root->left,v);
+            }
+            
+            if(root->right!=NULL)
+            {
+                inorder(root->right,v);
+            }
+        }
+        
+    }
+    bool isIdentical(Node *r1, Node *r2)
+    {
+        vector<int>r;
+        vector<int>rr;
+        inorder(r1,r);
+        inorder(r2,rr);
+        
+        if(r.size()==rr.size())
+        {
+            for(int i=0;i<r.size();i++)
+            {
+                if(r[i]!=rr[i])
+                {
+                    return false;
+                }
+            }
+        }
+        else{
+            return false;
+        }
+        
+        return true;
+    }
