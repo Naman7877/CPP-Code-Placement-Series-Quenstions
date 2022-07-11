@@ -1,0 +1,54 @@
+ struct Node* reverse(Node* head)
+    {
+        Node* curr=head;
+        Node* pre=NULL;
+        
+        
+        while(curr!=NULL)
+        {
+            Node* nextn=curr->next;
+            curr->next=pre;
+            pre=curr;
+            curr=nextn;
+        }
+        return pre;      
+        
+    }
+    
+    
+    Node* addOne(Node *head) 
+    {
+        struct Node* rev=reverse(head);
+        struct Node* temp=rev;
+        // here prev contain one prev value of urrent node because if current node reach null that how new node add this null node 
+        // so overcome this problem use prev node to add new node 
+        struct Node* prev=head;
+      
+      // here add one unit in start node in 
+        int sum=temp->data+1;
+        // this contain the number
+        temp->data=sum%10;
+        // this contain the carry 
+        int carry=sum/10;
+        
+        temp=temp->next;
+        
+        // iterate this loop at the end of the 
+        while(temp!=NULL)
+        {
+            sum=temp->data+carry;
+            temp->data=sum%10;
+            carry=sum/10;
+            prev=temp;
+            temp=temp->next;
+            
+        }
+        
+        if(carry!=0)
+        {
+            prev->next=new Node(carry);
+        }
+        
+        head=reverse(rev);
+        return head;
+    }
