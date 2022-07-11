@@ -1,0 +1,63 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+vector<long long> printNGE(int arr[], int n)
+{
+    stack<int> s;
+    vector<long long> v1;
+    long long v[n];
+
+    // in this stack store only index of element and than take that index and find that element 
+    s.push(0);
+    for (int i = 1; i < n; i++)
+    {
+
+        if (s.empty())
+        {
+            s.push(i);
+            continue;
+        }
+
+        // if stack is not empty and stack top is samller than current array element that mean this the left greate number for that number 
+
+        while (s.empty() == false && arr[s.top()] < arr[i])
+        {
+
+            // cout << arr[s.top()] << " --> " << arr[i] << endl;
+            // here add that left greater number in array at the same index as  given array 
+            v[s.top()] = arr[i];
+            // and after that pop the elment 
+            s.pop();
+        }
+
+        s.push(i);
+    }
+
+    // if any element left greter not present than print -1 for that
+    while (s.empty() == false)
+    {
+        cout<<arr[s.top()]<<" --->"<<-1<<endl;
+         v[s.top()] = -1;
+        s.pop();
+    }
+
+    // and than transfer that in vector
+    for(int i=0;i<n;i++)
+    {
+        v1.push_back(v[i]);
+    }
+    return v1;
+}
+
+
+int main()
+{
+    int arr[] = {11, 13, 95, 3, 1, 45};
+    int n = sizeof(arr) / sizeof(arr[0]);
+    vector<long long> v=printNGE(arr,n);
+    for(int i=0;i<v.size();i++)
+    {
+        cout<<v[i]<<endl;
+    }
+    return 0;
+}
