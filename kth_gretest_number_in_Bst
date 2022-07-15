@@ -1,0 +1,25 @@
+// help function work for inorder traversal 
+void help(Node* root,vector<int>& v)
+    {
+        if(root==NULL)
+        {
+            return;
+        }
+        if(root->left)
+        {
+            help(root->left,v);
+        }
+        v.push_back(root->data);
+        if(root->right)
+        {
+            help(root->right,v);
+        }
+    }
+    int kthLargest(Node *root, int K)
+    {
+        // in order traversal sort the arraya and than
+      vector<int>v;
+      help(root,v);
+      int n =v.size();
+      return v[n-K];
+    }
