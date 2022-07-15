@@ -1,0 +1,238 @@
+#include <bits/stdc++.h>
+#include <stack>
+#include <math.h>
+//stack work on last in last out (lifo)
+// operation in stack 
+// 1. push 
+// 2. pop 
+// 3. top()
+// 4. isempty
+// 5. isfull 
+
+
+using namespace std;
+// solve prefix expression 
+int prefix(string s)
+{
+    stack<int> stack;
+
+    for (int i = s.length() - 1; i >= 0; i--)
+    {
+        if (s[i] >= '0' && s[i] <= '9')
+        {
+            // - '0' because change into simple number
+            stack.push(s[i] - '0');
+        }
+        else
+        {
+            int a = stack.top();
+            stack.pop();
+            int b = stack.top();
+            stack.pop();
+
+            switch (s[i])
+            {
+            case '+':
+                stack.push(a + b);
+                break;
+
+            case '-':
+                stack.push(a - b);
+                break;
+
+            case '*':
+                stack.push(a * b);
+                break;
+            case '/':
+                stack.push(a / b);
+                break;
+            }
+        }
+    }
+    return stack.top();
+}
+
+int postfix(string s)
+{
+    stack<int> stack;
+    for (int i = 0; i < s.length(); i++)
+    {
+        if (s[i] >= '0' && s[i] <= '9')
+        {
+            // - '0' because change into simple number
+            stack.push(s[i] - '0');
+        }
+        else
+        {
+            int a = stack.top();
+            stack.pop();
+            int b = stack.top();
+            stack.pop();
+
+            switch (s[i])
+            {
+            case '+':
+                stack.push(a + b);
+                break;
+
+            case '-':
+                stack.push(a - b);
+                break;
+
+            case '*':
+                stack.push(a * b);
+                break;
+            case '/':
+                stack.push(a / b);
+                break;
+            }
+        }
+    }
+    return stack.top();
+}
+int precedence(char c)
+{
+    if (c == '^')
+    {
+        return 3;
+    }
+    else if (c == '*' || c == '/')
+    {
+        return 2;
+    }
+    else if (c == '+' || c == '-')
+    {
+        return 1;
+    }
+    else
+    {
+        return -1;
+    }
+}
+
+string infix_to_postfix(string s)
+{
+    stack<char> st;
+    // this is answer string this string contain at last postfix order of any infix operation 
+    string ans;
+
+    //here traverse the whole string 
+    for (int i = 0; i < s.length(); i++)
+    {
+        // in string if char is '(' (opening bracket) then push in the stack 
+        if (s[i] == '(')
+        {
+            st.push(s[i]);
+        }
+        // if char is any operand then add this in answer string no cahnge in stack 
+        else if (s[i] >= 'a' && s[i] <= 'z' || s[i] >= 'A' && s[i] <= 'Z')
+        {
+            ans += s[i];
+        }
+        // if char is '0' (closing bracket) then pop() stack add them in answer while opening bracket doesn't occure ')'
+        else if (s[i] == ')')
+        {
+            while (!st.empty() && st.top() != '(')
+            {
+                // here top give the stack top element 
+                // ans+=st.pop(); this is work as same as top();
+                ans += st.top();
+                st.pop();
+            }
+            if (!st.empty())
+            {
+                st.pop();
+            }
+        }
+        
+        else
+        {
+            // if any low precedence operator come after the hight precedence operator in stack then  
+            // pop stack while low precedence operator does not occure and then add those operator which precedence is in answer string and push 
+            while(!st.empty() && precedence(st.top())>precedence(s[i]))
+            {
+                ans+=st.top();
+                st.pop();
+            }
+            st.push(s[i]);
+        }
+
+    }
+    while(!st.empty())
+    {
+        ans+=st.top();
+        st.pop();
+    }
+
+    return ans;
+}
+// check parantheseis 
+string CheckParanthese(string s)
+{
+    stack<char>st;
+    for(int i=0; i < s.length(); i++)
+    {
+        if(s[i] == '('|| s[i] == '{' || s[i] == '[')
+        {
+            st.push(s[i]);
+        }
+        else if(s[i] ==')')
+        {
+            if(!st.empty() && st.top()=='(')
+            {
+                st.pop();
+            }
+            else{
+                return "UnBalanced";
+            }
+            
+        }
+        else if (s[i] == '}')
+        {
+           
+            if (!st.empty() && st.top()=='{')
+            {
+                st.pop();
+            }
+            else
+            {
+                return "Un Balanced";
+            }
+        }
+        else if (s[i] == ']')
+        {
+            
+            if (!st.empty() && st.top() == '[')
+            {
+                st.pop();
+            }
+            else
+            {
+                return "Un Balanced";
+            }
+        }
+    }
+    if(st.empty())
+    {
+        return "Balanced ";
+    } 
+    return "Un Balanced";
+}
+
+
+int main()
+{ 
+
+    int n;
+    cout<<"enter the size of stack "<<endl;
+    cin>>n;
+    int arr[n];
+    int top=-1;
+
+    cout << prefix("-+7*45+20") << endl;
+    cout << postfix("233*+")<<endl;
+    cout << infix_to_postfix("(a+b)+(c+b)")<< endl;
+    cout << CheckParanthese("[[{()}]]") << endl;
+
+        return 0;
+}
