@@ -1,0 +1,182 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+struct node
+{
+    int data;
+    struct node *next;
+};
+
+// head point the first node
+struct node *head = NULL;
+
+// this function is use to create new node
+struct node *create()
+{
+    struct node *newnode = (struct node *)malloc(sizeof(struct node *));
+    return newnode;
+}
+
+// display a linklist -------------------------------------------------------------------------------------------
+void display(struct node *head)
+{
+    cout << "display the linklist" << endl;
+    struct node *temp = head;
+    while (temp != NULL)
+    {
+        cout << temp->data << " -> ";
+        temp = temp->next;
+    }
+    cout << temp->data << " -> "<<"NULL";
+}
+
+// we insert node at the fort of linklist-----------------------------------------------------------------------
+void insert_front()
+{
+    int x;
+    cout << "enter the value you want to add at the front side of linklist  " << endl;
+    cin >> x;
+    struct node *newnode = create();
+    newnode->data = x;
+    newnode->next = head;
+    head = newnode;
+}
+
+// value insert in end of linklist ------------------------------------------------------------------------------
+void insert_end()
+{
+    int x;
+    cout << "enter the value you want to add at the back side of linklist  " << endl;
+    cin >> x;
+    struct node *newnode = create();
+    newnode->data = x;
+    struct node *temp = head;
+    while (temp->next != NULL)
+    {
+        temp = temp->next;
+    }
+    temp->next = newnode;
+    newnode->next = NULL;
+}
+
+// reverse a linklist ----------------------------------------------------------------------------------------------
+void reverse(struct node* head)
+{
+    cout << "reverse data print" << endl;
+    struct node *previous = NULL;
+    struct node *current = head;
+    struct node *next_node=NULL;
+    while (next_node != NULL)
+    {
+
+        next_node=current->next;
+        current->next=previous;
+        previous=current;
+        current=next_node;
+    }
+    head = previous;
+
+    struct node *temp = head;
+    while (temp != NULL)
+    {
+        cout << temp->data << " ->";
+        temp = temp->next;
+    }
+    cout << temp->data << "->"<<"null";
+    
+}
+
+
+
+// this function reverse a linklist by using recursion---------------------------------------------------------------------------
+struct node *reverserecursive(struct node *head)
+{
+    // this is base case if linklist contain only one link then this condition iterate and return head
+    if (head == NULL || head->next == NULL)
+    {
+        return head;
+    }
+    // run methos recursively
+    struct node *newnode = reverserecursive(head->next);
+    head->next->next = head;
+    head->next = NULL;
+
+    return newnode;
+}
+
+// reverse a k element in link list-------------------------------------------------------------------------------
+struct node *reversek(struct node *head, int k)
+{
+    struct node *previous = NULL;
+    struct node *current = head;
+    struct node *next_node;
+    // this count count the k element
+    int count = 0;
+    while (current != NULL && count < k)
+    {
+        next_node = current->next;
+        current->next = previous;
+        previous = current;
+        current = next_node;
+        count++;
+    }
+
+    // after one loop next loop start next element
+    if (next_node != NULL)
+    {
+        head->next = reversek(next_node, k);
+    }
+    return previous;
+}
+
+// floyd's algorithm for detecting loop/cycle in linklist ----------------------------------------------------------
+void floyed()
+{
+    struct node *slow = head;
+    struct node *fast = head->next;
+    while (fast != NULL && fast->next != NULL)
+    {
+        if (slow == fast)
+        {
+            cout << "This licklist contain a cycle " << endl;
+            break;
+        }
+        fast = fast->next;
+        slow = slow->next;
+    }
+    cout << "linklist is not contained  cycle " << endl;
+
+    // if any cycle detect then remve cycle
+    // any of one fast/slow initilized head
+    // then iterare this loop and when then both come at same place
+    // this element create cycle so this elemet next contain null
+    fast = head;
+    while (fast->next != slow->next)
+    {
+        fast = fast->next;
+        slow = slow->next;
+    }
+    slow->next = NULL;
+}
+
+int main()
+{
+    insert_front();
+    insert_front();
+    // insert_front();
+    // insert_front();
+    // insert_front();
+    // insert_front();
+    // insert_front();
+    // insert_front();
+
+    reverse(head);
+    // struct node *newnode = reverserecursive(head);
+    // struct node* newnode=reversek(head,2);
+    // display(previous);
+    // floyed();
+
+    
+
+    return 0;
+}
