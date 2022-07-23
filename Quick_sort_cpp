@@ -1,0 +1,65 @@
+ int partition (int arr[], int low, int high)
+    {
+       // here select a pvot point 
+       int pivot=arr[low];
+       
+       
+       // and than count how many element is less than pivot element (riht side of pivot point)
+       int count=0;
+       for(int i=low+1;i<=high;i++)
+       {
+           if(arr[i]<=pivot)
+           {
+               count++;
+           }
+       }
+       
+       // and than find new position of pivot element and count in real position
+       int pivotindex=low+count;
+       // and swap pivot to its real position element 
+       swap(arr[pivotindex],arr[low]);
+       
+       
+       
+       // here find that all left side element of pivot is smaller than pivot 
+       // and right side greter than pvot if not than swap
+       int i=low;
+       int j=high;
+       
+       while(i<pivotindex && j>pivotindex)
+       {
+           while(arr[i]<pivot)
+           {
+               i++;
+           }
+           
+           while(arr[j]>pivot)
+           {
+               j--;
+           }
+           
+           if(i<pivotindex && pivotindex<j)
+           {
+               swap(arr[i++],arr[j--]);
+           }
+       }
+       
+       return pivotindex;
+}
+
+
+ void quickSort(int arr[], int low, int high)
+    {  
+       if (low < high)
+        {
+            // here partition function return pivot point and after that pivot point 
+            // call function repeat for left and right part also
+            int pivot = partition(arr, low, high);
+            // first for left part
+            quickSort(arr, low, pivot - 1);
+            // and than call for right part
+            quickSort(arr, pivot + 1, high);
+        }
+      
+    }
+   
