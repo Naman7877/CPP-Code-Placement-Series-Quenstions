@@ -1,0 +1,36 @@
+in a subset there are two case 
+- first take element of array 
+- second is that not take 
+their is choise so use both case in recursive 
+
+
+ void solve(vector<int> nums,int index,vector<int>out , vector<vector<int>>& ans)
+    {
+    
+    // if index cross the size of vector than add that output vector in ans vector
+        if(index>=nums.size())
+        {
+            ans.push_back(out);
+            return ;
+        }
+        
+        // this call is for exclude mean here element is not selected
+        solve(nums,index+1,out,ans);
+        
+        
+        // here elemen is selected
+        // include case
+        int element=nums[index];
+        out.push_back(element);
+        solve(nums,index+1,out,ans);
+        
+    }
+    
+    vector<vector<int>> subsets(vector<int>& nums) {
+        vector<int> out;
+        vector<vector<int>> ans;
+        solve(nums,0,out,ans);
+        
+        return ans;
+        
+    }
